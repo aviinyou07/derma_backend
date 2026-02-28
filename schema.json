@@ -1,0 +1,1821 @@
+{
+  "database": "db_derma_co",
+  "generatedAt": "2026-02-28T16:49:34.451Z",
+  "tables": [
+    {
+      "name": "brands",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "slug",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "logo",
+          "type": "varchar(255)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "name",
+          "unique": true,
+          "columns": [
+            "name"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "slug",
+          "unique": true,
+          "columns": [
+            "slug"
+          ]
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "categories",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "slug",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "image",
+          "type": "varchar(255)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "slug",
+          "unique": true,
+          "columns": [
+            "slug"
+          ]
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "coupon_usages",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "coupon_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "used_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fk_coupon_usage_order",
+          "unique": false,
+          "columns": [
+            "order_id"
+          ]
+        },
+        {
+          "name": "fk_coupon_usage_user",
+          "unique": false,
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "idx_coupon_user",
+          "unique": false,
+          "columns": [
+            "coupon_id",
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "uniq_coupon_user_order",
+          "unique": true,
+          "columns": [
+            "coupon_id",
+            "user_id",
+            "order_id"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "coupon_id",
+          "references": "coupons.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        },
+        {
+          "column": "order_id",
+          "references": "orders.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        },
+        {
+          "column": "user_id",
+          "references": "users.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "coupons",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "code",
+          "type": "varchar(50)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "discount_type",
+          "type": "enum('percentage','flat')",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "discount_value",
+          "type": "decimal(10,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "max_discount_amount",
+          "type": "decimal(10,2)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "minimum_order_amount",
+          "type": "decimal(10,2)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0.00"
+        },
+        {
+          "name": "usage_limit",
+          "type": "int",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "used_count",
+          "type": "int",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "per_user_limit",
+          "type": "int",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "starts_at",
+          "type": "datetime",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "expires_at",
+          "type": "datetime",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "code",
+          "unique": true,
+          "columns": [
+            "code"
+          ]
+        },
+        {
+          "name": "expires_at",
+          "unique": false,
+          "columns": [
+            "expires_at"
+          ]
+        },
+        {
+          "name": "is_active",
+          "unique": false,
+          "columns": [
+            "is_active"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "order_items",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "variation_id",
+          "type": "int",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "product_name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "product_slug",
+          "type": "varchar(255)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "brand_name",
+          "type": "varchar(150)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "size",
+          "type": "varchar(50)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "unit_price",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "mrp",
+          "type": "decimal(12,2)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "gst_percentage",
+          "type": "decimal(5,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "gst_amount",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "discount_amount",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": "0.00"
+        },
+        {
+          "name": "total_price",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_order_items_created_at",
+          "unique": false,
+          "columns": [
+            "created_at"
+          ]
+        },
+        {
+          "name": "order_id",
+          "unique": false,
+          "columns": [
+            "order_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "product_id",
+          "unique": false,
+          "columns": [
+            "product_id"
+          ]
+        },
+        {
+          "name": "variation_id",
+          "unique": false,
+          "columns": [
+            "variation_id"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "order_id",
+          "references": "orders.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "orders",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "order_number",
+          "type": "varchar(50)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "enum('pending','confirmed','processing','shipped','delivered','cancelled','returned')",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": "pending"
+        },
+        {
+          "name": "payment_status",
+          "type": "enum('pending','paid','failed','refunded','partially_refunded')",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": "pending"
+        },
+        {
+          "name": "currency",
+          "type": "varchar(10)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": "INR"
+        },
+        {
+          "name": "total_quantity",
+          "type": "int",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "subtotal",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "total_gst",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": "0.00"
+        },
+        {
+          "name": "shipping_charge",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": "0.00"
+        },
+        {
+          "name": "discount_amount",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": "0.00"
+        },
+        {
+          "name": "grand_total",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "coupon_code",
+          "type": "varchar(100)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "shipping_address",
+          "type": "json",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "billing_address",
+          "type": "json",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "invoice_number",
+          "type": "varchar(100)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "placed_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "confirmed_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "shipped_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "delivered_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "cancelled_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "returned_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "tracking_number",
+          "type": "varchar(100)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "courier_name",
+          "type": "varchar(100)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_orders_created_at",
+          "unique": false,
+          "columns": [
+            "created_at"
+          ]
+        },
+        {
+          "name": "idx_orders_status_date",
+          "unique": false,
+          "columns": [
+            "status",
+            "placed_at"
+          ]
+        },
+        {
+          "name": "idx_orders_status_payment",
+          "unique": false,
+          "columns": [
+            "status",
+            "payment_status"
+          ]
+        },
+        {
+          "name": "idx_orders_updated_at",
+          "unique": false,
+          "columns": [
+            "updated_at"
+          ]
+        },
+        {
+          "name": "idx_orders_user_date",
+          "unique": false,
+          "columns": [
+            "user_id",
+            "placed_at"
+          ]
+        },
+        {
+          "name": "order_number",
+          "unique": true,
+          "columns": [
+            "order_number"
+          ]
+        },
+        {
+          "name": "payment_status",
+          "unique": false,
+          "columns": [
+            "payment_status"
+          ]
+        },
+        {
+          "name": "placed_at",
+          "unique": false,
+          "columns": [
+            "placed_at"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        },
+        {
+          "name": "user_id",
+          "unique": false,
+          "columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "user_id",
+          "references": "users.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "product_variations",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "size",
+          "type": "varchar(50)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "mrp",
+          "type": "decimal(10,2)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "gst_percentage",
+          "type": "decimal(5,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": "18.00"
+        },
+        {
+          "name": "sku",
+          "type": "varchar(100)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "stock",
+          "type": "int",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "is_default",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_variations_is_active",
+          "unique": false,
+          "columns": [
+            "is_active"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "product_id",
+          "unique": true,
+          "columns": [
+            "product_id",
+            "size"
+          ]
+        },
+        {
+          "name": "product_id_2",
+          "unique": false,
+          "columns": [
+            "product_id"
+          ]
+        },
+        {
+          "name": "sku",
+          "unique": true,
+          "columns": [
+            "sku"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "product_id",
+          "references": "products.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "products",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "slug",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "brand_id",
+          "type": "int",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "description",
+          "type": "json",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "images",
+          "type": "json",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "labels",
+          "type": "varchar(255)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "keywords",
+          "type": "varchar(500)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "is_featured",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "is_trending",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "brand_id",
+          "unique": false,
+          "columns": [
+            "brand_id"
+          ]
+        },
+        {
+          "name": "category_id",
+          "unique": false,
+          "columns": [
+            "category_id"
+          ]
+        },
+        {
+          "name": "idx_products_is_active",
+          "unique": false,
+          "columns": [
+            "is_active"
+          ]
+        },
+        {
+          "name": "idx_products_is_featured",
+          "unique": false,
+          "columns": [
+            "is_featured"
+          ]
+        },
+        {
+          "name": "idx_products_is_trending",
+          "unique": false,
+          "columns": [
+            "is_trending"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "slug",
+          "unique": true,
+          "columns": [
+            "slug"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "brand_id",
+          "references": "brands.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "SET NULL"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "transactions",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "payment_gateway",
+          "type": "varchar(50)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "payment_method",
+          "type": "varchar(50)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "gateway_order_id",
+          "type": "varchar(100)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "gateway_payment_id",
+          "type": "varchar(100)",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "gateway_signature",
+          "type": "varchar(255)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "amount",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "enum('pending','success','failed','refunded','partially_refunded')",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": "pending"
+        },
+        {
+          "name": "refund_amount",
+          "type": "decimal(12,2)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0.00"
+        },
+        {
+          "name": "raw_response",
+          "type": "json",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "MUL",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "gateway_payment_id",
+          "unique": false,
+          "columns": [
+            "gateway_payment_id"
+          ]
+        },
+        {
+          "name": "idx_transaction_status_order",
+          "unique": false,
+          "columns": [
+            "order_id",
+            "status"
+          ]
+        },
+        {
+          "name": "idx_transactions_created_at",
+          "unique": false,
+          "columns": [
+            "created_at"
+          ]
+        },
+        {
+          "name": "order_id",
+          "unique": false,
+          "columns": [
+            "order_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "status",
+          "unique": false,
+          "columns": [
+            "status"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "order_id",
+          "references": "orders.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "user_addresses",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "address_type",
+          "type": "enum('home','work','other')",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "home"
+        },
+        {
+          "name": "full_name",
+          "type": "varchar(150)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "phone",
+          "type": "varchar(20)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "address_line1",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "address_line2",
+          "type": "varchar(255)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "city",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "state",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "postal_code",
+          "type": "varchar(20)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "country",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "is_default",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "user_id",
+          "unique": false,
+          "columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "user_id",
+          "references": "users.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "user_otps",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "purpose",
+          "type": "enum('email_verification','password_reset','login_verification')",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "otp_hash",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "expires_at",
+          "type": "datetime",
+          "nullable": false,
+          "key": "MUL",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "attempts",
+          "type": "int",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "is_used",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "expires_at",
+          "unique": false,
+          "columns": [
+            "expires_at"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "purpose",
+          "unique": false,
+          "columns": [
+            "purpose"
+          ]
+        },
+        {
+          "name": "user_id",
+          "unique": false,
+          "columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "user_id",
+          "references": "users.id",
+          "onUpdate": "NO ACTION",
+          "onDelete": "CASCADE"
+        }
+      ],
+      "checks": [],
+      "triggers": []
+    },
+    {
+      "name": "users",
+      "engine": "InnoDB",
+      "collation": "utf8mb4_0900_ai_ci",
+      "autoIncrement": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "key": "PRI",
+          "extra": "auto_increment",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "varchar(150)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "phone",
+          "type": "varchar(20)",
+          "nullable": true,
+          "key": "UNI",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "password",
+          "type": "varchar(255)",
+          "nullable": false,
+          "key": "",
+          "extra": "",
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "1"
+        },
+        {
+          "name": "email_verified",
+          "type": "tinyint(1)",
+          "nullable": true,
+          "key": "",
+          "extra": "",
+          "default": "0"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED",
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": true,
+          "key": "",
+          "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "email",
+          "unique": true,
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "phone",
+          "unique": true,
+          "columns": [
+            "phone"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "unique": true,
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "triggers": []
+    }
+  ]
+}
