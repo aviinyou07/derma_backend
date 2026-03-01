@@ -1,0 +1,229 @@
+ 
+ <%- include('partials/header') %>
+ 
+ <main class="w-full px-6 py-8">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-sm">
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary" href="#">Orders</a>
+<span class="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+<span class="text-primary font-medium">Order #MS-92841</span>
+</div>
+<!-- Header Action Area -->
+<div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-slate-900 dark:text-slate-100 text-4xl font-black tracking-tight">Order Details</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Placed on Oct 24, 2023 • 3 Items</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-xl h-12 px-6 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined mr-2">download</span>
+                        Download Invoice
+                    </button>
+<button class="flex items-center justify-center rounded-xl h-12 px-6 bg-primary text-white text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined mr-2">reorder</span>
+                        Reorder All Items
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Tracking and Items -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Tracking Timeline Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xl font-bold">Delivery Status</h3>
+<span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold uppercase tracking-wider">Out for Delivery</span>
+</div>
+<div class="relative flex flex-col md:flex-row justify-between">
+<!-- Progress Bar Background (Desktop) -->
+<div class="absolute top-5 left-0 w-full h-1 bg-slate-100 dark:bg-slate-800 hidden md:block"></div>
+<div class="absolute top-5 left-0 w-3/4 h-1 bg-primary hidden md:block"></div>
+<!-- Step 1 -->
+<div class="relative flex md:flex-col items-start md:items-center gap-4 md:gap-2 z-10 mb-6 md:mb-0">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<div class="flex flex-col md:items-center">
+<p class="font-bold text-sm">Order Placed</p>
+<p class="text-xs text-slate-500">Oct 24, 10:00 AM</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex md:flex-col items-start md:items-center gap-4 md:gap-2 z-10 mb-6 md:mb-0">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<div class="flex flex-col md:items-center">
+<p class="font-bold text-sm">Processing</p>
+<p class="text-xs text-slate-500">Oct 24, 02:30 PM</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex md:flex-col items-start md:items-center gap-4 md:gap-2 z-10 mb-6 md:mb-0">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</div>
+<div class="flex flex-col md:items-center">
+<p class="font-bold text-sm">Shipped</p>
+<p class="text-xs text-slate-500">Oct 25, 09:15 AM</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex md:flex-col items-start md:items-center gap-4 md:gap-2 z-10">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border-2 border-primary text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<div class="flex flex-col md:items-center">
+<p class="font-bold text-sm text-primary">Out for Delivery</p>
+<p class="text-xs text-slate-500">Expected today</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Items List -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<h3 class="text-xl font-bold">Ordered Items</h3>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Item 1 -->
+<div class="p-6 flex items-center gap-6 group">
+<div class="size-24 rounded-lg bg-slate-50 dark:bg-slate-800 overflow-hidden flex-shrink-0 flex items-center justify-center border border-slate-100 dark:border-slate-700">
+<img class="object-contain size-20" data-alt="Digital blood pressure monitor device" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-URgS7mz1X3uh-4q73ab6HvmJ3tLonnTka17u3DW_f12HVXD9buyBngPcSuhgn5d0zg5hi_2y5X_HcTbeQF_OIiJ812pecDRTBcqWsqGgYhYtKp3o-o9d2Dkb5UvxFopHdhm7Hj4ipgE8YzlguwFEhYFRzm30Z8MRPEcJ93gr0t3G0DuvFtvxobvUk6GLX63Dk-Hb2tHMHUhn36r8xrQ20zZ-QxTngNq4sbPsxAFPQttd-RnL0obLmoNY99fF-06BNlguJVFJWKPp"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">Digital Blood Pressure Monitor</h4>
+<p class="text-slate-500 text-sm">Automated upper arm cuff, smart tracking</p>
+</div>
+<p class="font-bold text-lg">$49.99</p>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<p class="text-sm text-slate-600 dark:text-slate-400">Qty: 1</p>
+<button class="text-primary text-sm font-semibold hover:underline">Write a review</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-6 flex items-center gap-6 group">
+<div class="size-24 rounded-lg bg-slate-50 dark:bg-slate-800 overflow-hidden flex-shrink-0 flex items-center justify-center border border-slate-100 dark:border-slate-700">
+<img class="object-contain size-20" data-alt="Bottle of Vitamin C supplements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmKq1G9CfVJJ3UFiSlty0dFXtEK8Xaf5mDHCGFGU5MHqupB-gnTRXdM1Tgbi8lRTelHyvRGqmEx5iZAKRNre-OYOgx2EB26YQGNAJkMP0LalHFuDM8d-mQuoPxfq0-pOJetwu67yIL-f1e0a0krnnFJpwSBxSi-JzN4jz5EdzEX7WsaTd-lF0Irf9tK7TdSI9sM8wv-HhhBj_uqE4s_vV-ku_eDfQihT219lzHSIV6Sjkp9r2yVwnhTRqEDhcZWt-JEOUeEQMroong"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">Vitamin C (1000mg)</h4>
+<p class="text-slate-500 text-sm">90 Capsules, Immune System Support</p>
+</div>
+<p class="font-bold text-lg">$18.50</p>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<p class="text-sm text-slate-600 dark:text-slate-400">Qty: 2</p>
+<button class="text-primary text-sm font-semibold hover:underline">Write a review</button>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-6 flex items-center gap-6 group">
+<div class="size-24 rounded-lg bg-slate-50 dark:bg-slate-800 overflow-hidden flex-shrink-0 flex items-center justify-center border border-slate-100 dark:border-slate-700">
+<img class="object-contain size-20" data-alt="Pack of blue disposable face masks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDaBwC9tP6aff8n6aewvHIkegp983KQulBX57X19t12NbEYala312yzVsx0d-QD_B2t9Me3H0ipo_2qoGOBn4OUpAudrifZWYBju7OEakIvT_74rBmAxiWsHbgkbzqeu8dtuJWhp6uUvI5GOd0ZDfW5E2YXw0wFh2Mgb-qcZQEXMrWC-9JHjwkwtUciJ5-DPX9yJnSDXKXtM9DOKxCWlIFwDnd7a03HIGj-Zo9nZnlIKFPUQ2K2hX2iUpttNbViHqvNusaTZLbjSKb"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">Disposable Face Masks</h4>
+<p class="text-slate-500 text-sm">3-Ply protection, 50 Pack Blue</p>
+</div>
+<p class="font-bold text-lg">$12.00</p>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<p class="text-sm text-slate-600 dark:text-slate-400">Qty: 1</p>
+<button class="text-primary text-sm font-semibold hover:underline">Write a review</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar (Summary and Shipping) -->
+<div class="space-y-8">
+<!-- Order Summary Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<h3 class="text-lg font-bold mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Order Summary</h3>
+<div class="space-y-4">
+<div class="flex justify-between text-slate-600 dark:text-slate-400">
+<span>Subtotal</span>
+<span>$98.99</span>
+</div>
+<div class="flex justify-between text-slate-600 dark:text-slate-400">
+<span>Shipping</span>
+<span class="text-green-600 font-medium">FREE</span>
+</div>
+<div class="flex justify-between text-slate-600 dark:text-slate-400">
+<span>Estimated Tax</span>
+<span>$7.92</span>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+<span class="font-bold text-xl">Total</span>
+<span class="font-black text-2xl text-primary">$106.91</span>
+</div>
+</div>
+</div>
+<!-- Shipping Info Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<h3 class="text-lg font-bold">Shipping Address</h3>
+</div>
+<div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+<p class="font-bold text-slate-900 dark:text-slate-100">Jonathan Miller</p>
+<p>1248 Medical Center Drive</p>
+<p>Building 4, Suite 210</p>
+<p>San Francisco, CA 94107</p>
+<p>United States</p>
+<p class="mt-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+                                +1 (555) 012-3456
+                            </p>
+</div>
+</div>
+<!-- Payment Info Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">credit_card</span>
+<h3 class="text-lg font-bold">Payment Method</h3>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
+<div class="w-12 h-8 bg-white dark:bg-slate-700 rounded border border-slate-200 dark:border-slate-600 flex items-center justify-center font-bold text-xs italic text-blue-800 dark:text-blue-400">
+                                VISA
+                            </div>
+<div>
+<p class="font-medium">Visa ending in 4242</p>
+<p class="text-xs text-slate-500">Expires 12/26</p>
+</div>
+</div>
+<div class="mt-6">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Billing Address</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400">Same as shipping address</p>
+</div>
+</div>
+<!-- Map Location (Implicit Component) -->
+<div class="rounded-xl overflow-hidden h-48 relative border border-slate-200 dark:border-slate-800">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="Stylized map showing San Francisco area" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGa0et8VOyxTMyb5rJ5_zKlF2vuYiO1MMsaq7vc-KUB-WcQlZlZnjpLGOec4o6u-ILS5nZdOq9XK-xwr1DV2G0IPChFWvgI4223NDNV5RKqq_EzSgqd2qGvHOpFv2rsSnG_2uF_uYd3BfrP0wlcdEaLMppxkYM_-kcP6E_bIz1768kvRcDHsflKiIEOX2rgDrGjm6bmod_Sw8gCWSsgEwjwZbiAmJOg1azSfHR6Nj6PZ6ddQx5w67FZWs-Ycl-no8KKhSp-dCHsBm0"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<div class="bg-white dark:bg-slate-900 p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-primary text-[32px]">location_on</span>
+</div>
+</div>
+<div class="absolute bottom-2 left-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded text-[10px] font-bold text-slate-500">
+                            TRACKING LIVE
+                        </div>
+</div>
+</div>
+</div>
+</main>
+
+<%- include('partials/footer') %>

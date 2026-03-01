@@ -1,0 +1,165 @@
+ <%- include('partials/header') %>
+<main class="px-2 md:px-6 lg:px-10 py-6">
+<div class="flex flex-col gap-2 mb-4">
+<h2 class="text-2xl md:text-4xl font-black tracking-tight">Your Cart</h2>
+<p class="text-slate-500 dark:text-slate-400">3 premium essentials selected</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Product List Section -->
+<div class="max-w-4xl w-full space-y-5">
+        <!-- Item 1 -->
+        <div class="flex flex-row items-center gap-6 p-2 bg-white rounded-xl border border-slate-200 ">
+            <!-- Product Image -->
+            <div class="w-32 h-32 flex-shrink-0 bg-primary/5 rounded-lg overflow-hidden border border-slate-200">
+                <img class="w-full h-full object-cover" 
+                     alt="Minimalist glass bottle of face serum" 
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIAULNYhVY8RycUXxuhtiaRAm16yQ7VVmCuW_Fhx3aMBsDc-w_laaHQ0CW5ScBBHMKuvehDpdabGY-u5I54v-4HwbsqsEZ-e5QSKbkwpK2TMR5y9rJFMTvLBJXr5n3e7bEd0JWqoOSbFMFIB0dhHN1NsmlibhLUtefMKCMj4Ksc14S9iNM9VMmUnIH9Ube8lD9VajQv4G5UEZbWaRFkqeXNu2PuXBW73RN8ebZV2VJo--Fuq2W-kJ5At1mNzF9lfXpQCn-GgBOvQLQ"/>
+            </div>
+            
+            <!-- Product Details -->
+            <div class="flex-1 flex flex-col justify-between h-full">
+                <div class="">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Revitalizing Glow Serum</h3>
+                        <p class="text-sm text-slate-500">30ml | Advanced Hydration</p>
+                    </div>
+                    <p class="text-lg font-bold text-emerald-600">$85.00</p>
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex items-center justify-between mt-2">
+                    <!-- Quantity selector -->
+                    <div class="flex items-center bg-slate-100 rounded-lg px-2 py-1">
+                        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <span class="material-symbols-outlined text-base">remove</span>
+                        </button>
+                        <span class="w-8 text-center font-semibold text-sm text-slate-700">1</span>
+                        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <span class="material-symbols-outlined text-base">add</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Remove button -->
+                    <button class="flex items-center gap-1.5 text-slate-400 hover:text-rose-500 transition-colors duration-200 text-sm font-medium group">
+                        <span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">delete</span>
+                     
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="flex flex-row items-center gap-6 p-2 bg-white rounded-xl border border-slate-200 ">
+            <div class="w-32 h-32 flex-shrink-0 bg-primary/5 rounded-lg overflow-hidden border border-slate-200">
+                <img class="w-full h-full object-cover" 
+                     alt="White tub of hydrating facial cream" 
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqAzUUIKtJb4Y-7bC0DHaxOw_bU9d-t_7o-_E4zyR9-ICETXIRFB6Bn6vjXJ-REsQOrTnAIqphf39w7RyCLRPUErjUBTiuZc0G12u9hxI4BSS2Ij7P1YHzX9MCsMcV7uFked1UC6aNoa6yFXp54DZItV3HmMWesCLHrUJIY4we2wb6I2iZ8rqRK5pwKujRKPTce0WEW_6AsEKlLUEpPjsp46CXh3N7wZ-gn0UaAJjkbV1K3kxNr4-S8yVS0vCp8-oDY9rC2BWrPZsZ"/>
+            </div>
+            <div class="flex-1 flex flex-col justify-between h-full py-1">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">Intense Hydrating Cream</h3>
+                        <p class="text-sm text-slate-500">50ml | Botanical Rich Formula</p>
+                    </div>
+                    <p class="text-lg font-bold text-emerald-600">$120.00</p>
+                </div>
+                <div class="flex items-center justify-between mt-2">
+                    <div class="flex items-center bg-slate-100 rounded-lg px-2 py-1">
+                        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <span class="material-symbols-outlined text-base">remove</span>
+                        </button>
+                        <span class="w-8 text-center font-semibold text-sm text-slate-700">2</span>
+                        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <span class="material-symbols-outlined text-base">add</span>
+                        </button>
+                    </div>
+                    <button class="flex items-center gap-1.5 text-slate-400 hover:text-rose-500 transition-colors duration-200 text-sm font-medium group">
+                        <span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">delete</span>
+                         
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="flex flex-row items-center gap-6 p-2 bg-white rounded-lg border border-slate-200 ">
+            <div class="w-32 h-32 flex-shrink-0 bg-primary/5 rounded-lg overflow-hidden border border-slate-200">
+                <img class="w-full h-full object-cover" 
+                     alt="Frosted glass bottle with bamboo cap" 
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2GgcEOxGcFngEWGfiM9Qdve5Wzev7vuJfEtmJZRPvmsv8d9xD2K89RiMNM7yHzJ-EjVvLGzKbQGF4BRJiRTZ6JVGwQl_6XE_pvK0A5vF3MqiHWO_mIgGtOndudUiKYJ7piuDHEIRWAxV_659LziJcLWWYTYp5Ya7xtcnk9XtkiqH-DSpEblZq9bGU-DBo7kQkLa_fmUTPRLCXKl30tfLR5PlvVvK26St6zcoXscZPbF_RwiVQvN6nxBLIoE3SDQf7mhhYafCKvnGm"/>
+            </div>
+            <div class="flex-1 flex flex-col justify-between h-full py-1">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Midnight Recovery Oil</h3>
+                        <p class="text-sm text-slate-500">15ml | Nighttime Treatment</p>
+                    </div>
+                    <p class="text-lg font-bold text-emerald-600">$65.00</p>
+                </div>
+                <div class="flex items-center justify-between mt-6">
+                    <div class="flex items-center bg-slate-100 rounded-lg px-2 py-1">
+                        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <span class="material-symbols-outlined text-base">remove</span>
+                        </button>
+                        <span class="w-8 text-center font-semibold text-sm text-slate-700">1</span>
+                        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <span class="material-symbols-outlined text-base">add</span>
+                        </button>
+                    </div>
+                    <button class="flex items-center gap-1.5 text-slate-400 hover:text-rose-500 transition-colors duration-200 text-sm font-medium group">
+                        <span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">delete</span>
+                        <span>Remove</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Order Summary Sidebar -->
+<aside class="w-full lg:w-[400px] space-y-6">
+<div class="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 p-8 rounded-xl shadow-sm">
+<h3 class="text-xl font-bold mb-6">Order Summary</h3>
+<!-- Discount Code -->
+<div class="mb-8">
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Discount Code</label>
+<div class="flex gap-2">
+<input class="flex-1 bg-background-light dark:bg-slate-800 border-none rounded-lg text-sm px-4 focus:ring-2 focus:ring-primary/50" placeholder="Enter code" type="text"/>
+<button class="bg-primary/20 text-primary font-bold px-4 py-2 rounded-lg text-sm hover:bg-primary/30 transition-colors">Apply</button>
+</div>
+</div>
+<!-- Price Details -->
+<div class="space-y-4 mb-8">
+<div class="flex justify-between text-slate-600 dark:text-slate-400">
+<span>Subtotal</span>
+<span>$390.00</span>
+</div>
+<div class="flex justify-between text-slate-600 dark:text-slate-400">
+<span>Shipping</span>
+<span class="text-primary font-medium italic">Free</span>
+</div>
+<div class="flex justify-between text-slate-600 dark:text-slate-400">
+<span>Estimated Tax</span>
+<span>$31.20</span>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-end">
+<span class="text-lg font-bold">Total</span>
+<span class="text-2xl font-black text-primary">$421.20</span>
+</div>
+</div>
+<!-- Checkout Button -->
+<button class="w-full bg-primary hover:bg-emerald-500 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">lock</span>
+                        Secure Checkout
+                    </button>
+</div>
+<!-- Shipping Message -->
+<div class="bg-primary/5 rounded-xl p-4 flex items-start gap-4 border border-primary/10">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<p class="text-sm text-slate-600 dark:text-slate-400">
+<strong class="text-slate-900 dark:text-slate-200">Complimentary Standard Shipping.</strong> Your order is carbon-neutral and arrives in eco-friendly packaging.
+                    </p>
+</div>
+</aside></div>
+</main>
+
+
+<%- include('partials/footer') %>

@@ -1,30 +1,56 @@
 const mysql = require('mysql2/promise');
 
-const DEFAULT_DB_CONNECT_TIMEOUT_MS = Number(process.env.DB_CONNECT_TIMEOUT_MS || 10000);
-const DEFAULT_DB_ACQUIRE_TIMEOUT_MS = Number(process.env.DB_ACQUIRE_TIMEOUT_MS || 10000);
+const {
+  DB_HOST,
+  DB_USER,
+  DB_PASSWORD,
+  DB_DATABASE,
+  DB_PORT = 3306,
+  DB_CONNECTION_LIMIT = 10,
+  DB_QUEUE_LIMIT = 50,
+  DB_CONNECT_TIMEOUT_MS = 10000,
+  DB_ACQUIRE_TIMEOUT_MS = 10000
+} = process.env;
 
+/* =========================
+   ENV VALIDATION
+========================= */
+if (!DB_HOST || !DB_USER || !DB_DATABASE) {
+  throw new Error('Missing required DB environment variables');
+}
+
+/* =========================
+   CREATE POOL
+========================= */
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: Number(process.env.DB_PORT || 3306),
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_DATABASE,
+  port: Number(DB_PORT),
   waitForConnections: true,
-  connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 10),
-  queueLimit: Number(process.env.DB_QUEUE_LIMIT || 50),
-  connectTimeout: DEFAULT_DB_CONNECT_TIMEOUT_MS,
+  connectionLimit: Number(DB_CONNECTION_LIMIT),
+  queueLimit: Number(DB_QUEUE_LIMIT),
+  connectTimeout: Number(DB_CONNECT_TIMEOUT_MS),
   enableKeepAlive: true,
   keepAliveInitialDelay: 0
 });
 
+/* =========================
+   HEALTH STATE
+========================= */
 const health = {
   dbReady: false,
   lastCheckedAt: null,
   lastError: null
 };
 
+/* =========================
+   TIMEOUT WRAPPER
+========================= */
 const withTimeout = async (promise, timeoutMs, message) => {
   let timer;
+
   try {
     return await Promise.race([
       promise,
@@ -37,19 +63,25 @@ const withTimeout = async (promise, timeoutMs, message) => {
   }
 };
 
-const testConnection = async ({ timeoutMs = DEFAULT_DB_CONNECT_TIMEOUT_MS } = {}) => {
+/* =========================
+   TEST CONNECTION
+========================= */
+const testConnection = async ({ timeoutMs = Number(DB_CONNECT_TIMEOUT_MS) } = {}) => {
   let connection;
+
   try {
     connection = await withTimeout(
       pool.getConnection(),
       timeoutMs,
       `Timed out acquiring DB connection after ${timeoutMs}ms`
     );
+
     await connection.ping();
 
     health.dbReady = true;
     health.lastCheckedAt = new Date().toISOString();
     health.lastError = null;
+
     return true;
   } catch (error) {
     health.dbReady = false;
@@ -57,62 +89,91 @@ const testConnection = async ({ timeoutMs = DEFAULT_DB_CONNECT_TIMEOUT_MS } = {}
     health.lastError = error?.message || 'Unknown DB connectivity error';
     throw error;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
 
-const initializeDatabase = async () => {
-  await testConnection();
-};
-
+/* =========================
+   SIMPLE QUERY
+========================= */
 const query = async (sql, params = []) => {
+  const start = Date.now();
+
   const [rows] = await pool.query(sql, params);
+
+  const duration = Date.now() - start;
+
+  if (duration > 500) {
+    console.warn(`[DB] Slow query (${duration}ms): ${sql}`);
+  }
+
   return rows;
 };
 
-const transaction = async (callback, { acquireTimeoutMs = DEFAULT_DB_ACQUIRE_TIMEOUT_MS } = {}) => {
+/* =========================
+   TRANSACTION
+========================= */
+const transaction = async (callback, { acquireTimeoutMs = Number(DB_ACQUIRE_TIMEOUT_MS) } = {}) => {
   let connection;
+
   try {
     connection = await withTimeout(
       pool.getConnection(),
       acquireTimeoutMs,
       `Timed out acquiring transaction connection after ${acquireTimeoutMs}ms`
     );
+
     await connection.beginTransaction();
 
-    const result = await callback(connection);
+    const result = await Promise.resolve(callback(connection));
+
     await connection.commit();
     return result;
+
   } catch (error) {
     if (connection) {
       try {
         await connection.rollback();
       } catch (rollbackError) {
-        console.error('[DB] rollback failed', rollbackError);
+        console.error('[DB] rollback failed:', rollbackError);
       }
     }
     throw error;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
 
+/* =========================
+   CLOSE POOL
+========================= */
 const closePool = async () => {
   await pool.end();
   health.dbReady = false;
 };
 
-const getPoolHealth = () => ({ ...health });
+/* =========================
+   GRACEFUL SHUTDOWN
+========================= */
+process.on('SIGINT', async () => {
+  console.log('[DB] Closing pool...');
+  await closePool();
+  process.exit(0);
+});
 
+process.on('SIGTERM', async () => {
+  console.log('[DB] Closing pool...');
+  await closePool();
+  process.exit(0);
+});
+
+/* =========================
+   EXPORTS
+========================= */
 module.exports = {
   query,
   transaction,
   testConnection,
-  initializeDatabase,
   closePool,
-  getPoolHealth
+  getPoolHealth: () => ({ ...health })
 };

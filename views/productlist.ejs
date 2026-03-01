@@ -1,0 +1,478 @@
+<style>
+    /* subtle fill for stars */
+    .fill-1 {
+        font-variation-settings: 'FILL' 1;
+    }
+
+    /* filter drawer transition */
+    .filter-drawer {
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(100%);
+    }
+
+    .filter-drawer.open {
+        transform: translateX(0);
+    }
+
+    /* quick add hover effect (already in group) */
+    .product-card .translate-y-12 {
+        transition: transform 0.3s ease-in-out;
+    }
+</style>
+
+
+
+<%- include('partials/header') %>
+
+
+
+
+
+
+    <main class="w-full px-4 md:px-10 py-8 relative">
+        <!-- Breadcrumbs & Title -->
+        <div class=" mb-6">
+            <div class="flex md:flex-row md:items-end justify-between gap-6">
+                <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-2">The Collection</h1>
+                <!-- ADD THIS MOBILE FILTER BUTTON - visible only on mobile/tablet -->
+                <button id="mobileFilterBtn"
+                    class="lg:hidden flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-bold">
+                    <span class="material-symbols-outlined text-primary">filter_list</span>
+                    Filters
+                </button>
+            </div>
+
+              <p class="text-slate-600 dark:text-slate-400 max-w-xl">Dermatologist-tested formulas engineered for visible results. Ethical, clinical, and effective.</p>
+
+        </div>
+
+
+
+
+
+        <div class="flex flex-col lg:flex-row gap-10">
+            <!-- DESKTOP FILTER (visible lg, hidden mobile) -->
+            <aside class="hidden lg:block w-64 flex-shrink-0 space-y-8">
+                <div>
+                    <h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">filter_list</span>
+                        Filters
+                    </h3>
+                    <!-- Skin Type -->
+                    <div class="py-4 border-t border-slate-200">
+                        <h4 class="text-sm font-semibold mb-3">Skin Type</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Oily
+                                    Skin</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Dry
+                                    Skin</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Sensitive
+                                    Skin</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Combination</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Concern -->
+                    <div class="py-4 border-t border-slate-200">
+                        <h4 class="text-sm font-semibold mb-3">Concern</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Anti-Aging</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Acne
+                                    &amp; Blemishes</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    class="rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    type="checkbox" />
+                                <span
+                                    class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Dark
+                                    Spots</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Price -->
+                    <div class="py-4 border-t border-slate-200">
+                        <h4 class="text-sm font-semibold mb-3">Price Range</h4>
+                        <div class="space-y-4">
+                            <input
+                                class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary"
+                                type="range" />
+                            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                                <span>$0</span>
+                                <span>$250+</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rating -->
+                    <div class="py-4 border-t border-slate-200">
+                        <h4 class="text-sm font-semibold mb-3">Rating</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input
+                                    class="text-primary focus:ring-primary border-slate-300 dark:border-slate-700 bg-transparent"
+                                    name="rating" type="radio" />
+                                <div class="flex text-amber-400">
+                                    <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                    <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                    <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                    <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                    <span class="material-symbols-outlined text-sm">star_half</span>
+                                </div>
+                                <span class="text-xs text-slate-500">4.5+</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full mt-6 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        Clear Filters
+                    </button>
+                </div>
+            </aside>
+
+            <!-- MOBILE FILTER DRAWER (right side, hidden on lg) -->
+            <div id="filterDrawer"
+                class="fixed inset-y-0 right-0 w-80 bg-white dark:bg-slate-900 z-50 shadow-2xl filter-drawer lg:hidden overflow-y-auto p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-bold text-lg flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">filter_list</span>
+                        Filters
+                    </h3>
+                    <button id="closeFilterBtn" class="p-2 rounded-full bg-slate-100 dark:bg-slate-800">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <!-- Skin Type -->
+                <div class="py-4 border-t border-slate-200">
+                    <h4 class="text-sm font-semibold mb-3">Skin Type</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Oily Skin</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Dry Skin</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Sensitive Skin</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Combination</span></label>
+                    </div>
+                </div>
+                <!-- Concern -->
+                <div class="py-4 border-t border-slate-200">
+                    <h4 class="text-sm font-semibold mb-3">Concern</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Anti-Aging</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Acne &amp; Blemishes</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input
+                                class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox" /><span
+                                class="text-sm text-slate-600 dark:text-slate-400">Dark Spots</span></label>
+                    </div>
+                </div>
+                <!-- Price -->
+                <div class="py-4 border-t border-slate-200">
+                    <h4 class="text-sm font-semibold mb-3">Price Range</h4>
+                    <div class="space-y-4"><input class="w-full accent-primary" type="range" />
+                        <div class="flex justify-between text-xs"><span>$0</span><span>$250+</span></div>
+                    </div>
+                </div>
+                <!-- Rating -->
+                <div class="py-4 border-t border-slate-200">
+                    <h4 class="text-sm font-semibold mb-3">Rating</h4>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input class="text-primary focus:ring-primary border-slate-300" name="rating-drawer"
+                            type="radio" />
+                        <div class="flex text-amber-400"><span
+                                class="material-symbols-outlined text-sm fill-1">star</span><span
+                                class="material-symbols-outlined text-sm fill-1">star</span><span
+                                class="material-symbols-outlined text-sm fill-1">star</span><span
+                                class="material-symbols-outlined text-sm fill-1">star</span><span
+                                class="material-symbols-outlined text-sm">star_half</span></div>
+                        <span class="text-xs text-slate-500">4.5+</span>
+                    </label>
+                </div>
+                <button
+                    class="w-full mt-6 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold rounded-lg">Clear
+                    Filters</button>
+            </div>
+
+            <!-- Product Grid (unchanged, but we keep your exact cards) -->
+            <div class="flex-1">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+                    <!-- Card 1 -->
+                    <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover opacity-100"
+                                alt="serum"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKC2nJNP71ujDOS7YgEYFMYOb6Z3irvx0leKlH2oHc-40eASwASeNeLNFByp1Y_hjOnVPkOwW8e6xhdsRrLmM6XM5r9WqPJZ3CDZ09ZQs2D9ZYInS9ZeuErXuDCfe8WUyYJPC9rfVoZTfKodk6d7PlM3Oh-Rg2l5yQ4VEz1j6T84dTYaMB7fhGYekmRV_kiekF6aegryrA0WBvaJ8uxbZbr8yQbYiOSnbECPPg1u5Qtf1R1_wEscNOV70rNZGYwc-lpOEhwWDBWNeF" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 group-hover:opacity-100"
+                                alt="model"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqVW3yQCWMiv-6wC9XQHlbsYWF64HepkJSYNuCnMIq9YtGTO5mjg7KYKqceCsryo6sm-iFncog_WXJFsGyMxn_a4dBJ7TnOahW10-ySGKFD-gsIWsA1ObQlczRzSGFxIgwgTc3oNqdf3NcZIqVSofatitUO4ABELFbO2QifnvbIB3l33OiWNVLx4cJKleFzBFLU1QkXw6uGOR51aTCS6T3h6gdlDEP_iB8FYbHBUkX0qWDZ3voXfqvpeyFTakX5UThZy9KAKMs2kKn" />
+                            <div class="absolute top-4 left-4"><span
+                                    class="bg-primary/90 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">Best
+                                    Seller</span></div>
+                            <button
+                                class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur rounded-full flex items-center justify-center"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div
+                                class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-300">
+                                <button
+                                    class="w-full py-3 bg-primary text-white text-sm font-bold rounded-lg shadow-lg">Quick
+                                    Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-1 mb-2 text-amber-400"><span
+                                    class="material-symbols-outlined text-[16px] fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="text-xs text-slate-400 ml-1">(128)</span></div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-1 leading-tight">Hyaluronic Acid Serum</h3>
+                            <p class="text-slate-500 text-sm mb-4">Deeply hydrating &amp; plumping formula</p>
+                            <div class="flex items-center justify-between"><span
+                                    class="text-xl font-black text-primary">$42.00</span><span
+                                    class="text-xs text-slate-400 font-medium">30ml / 1oz</span></div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIOXDl46RZKcFJBjUjV-5x54VkrQmy6lsSHHR7RTiS0lUP3X0LofHFDVXn2S1__J7p7h0aodBJtAdsmkMwEO0_ZzcKwEDh9lChrSjrQPCS8dv2VlW-WI7GwZVjw6_EQxky914cyyz0N_R09Mx9b0peHJvErIsSYtLUf-lTlCfIZidEsehodey48ZswBcE4mKcg91hM6fe4g7bque7OZeGlVHl9qgCxf2rV98pcGDdxR3kpANRLf6JG-9uqSk0KdhcJypaVCqIGtnBU" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvETEiqO7FW-GDU2FJxw55bMg12oXkZdUiVO-_QNVp9y4OkIamRFtia1DgAfGNhU-0bIrKI3Z1-E1IIXXHtySrVb1yzPrNyJfko5OG74ineBMtQeZDhmA0yDDkFIOZYxwt12CRakVzvaIJNd0c2H44shb-iJYhPx8WNEgHs79dmxZyYN04dse_5B_tP60BSJ-d2Dcu70BeB2WbU1_Xt6eNApBAmY0-O4In6sA5ayfP3XUrc9VCIPuwrQoSQMgIOY-yRJ-8w2JjKYtI" />
+                            <div class="absolute top-4 left-4"><span
+                                    class="bg-slate-900/80 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">New</span>
+                            </div>
+                            <button class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur rounded-full"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0"><button
+                                    class="w-full py-3 bg-primary text-white text-sm font-bold rounded-lg">Quick
+                                    Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-1 mb-2 text-amber-400"><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span>star</span><span
+                                    class="text-xs text-slate-400 ml-1">(56)</span></div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-1">Gentle Milk Cleanser</h3>
+                            <p class="text-slate-500 text-sm mb-4">Sulfate-free pH balanced wash</p>
+                            <div class="flex items-center justify-between"><span
+                                    class="text-xl font-black text-primary">$34.00</span><span class="text-xs">150ml /
+                                    5oz</span></div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG6p0cGgOxEUPwzhzddaaZx4p3nnZMwQ9eKAFuCItEuEg5zkv6dxlnqaw1al6ei7cETtlUplI2eQMuUk5nZvRCHRj-duHV238Bk-KD89CJ2SfM73LWtL2W8yLWTn2Vbuz9z0cxM_tfxk2F6jMwdXw0cKJLONHRMdOo36xzf2SEOUMPM0ArMhJulsDeBAY8GTk0NGgAte-5OCfnhvsjg1j5a4xjsJf-qqMg1DaJpIG7HjqqgKdVlcFwyXbc37BHJqoQSWkCdSNALvw1" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjJxz7ih4XpDDXHlw0yZOuF9dhLuP5q7OKFqUmxCOoIlWXCq9X3h463xjPcB5fNGOEMuz8yuf4H6go0ChFMhxGuZnQCn6zrL4hcoJjwU-A8EHdXtLQ0zf5r9jI9MMNBPVx8XVtbLaxLf2YhB_k7R8PXraxlJUyYaZa_F9nXWC8a1jL33yIqcYHc2stVuHHGDUFZWzeMs6FXNfa_T6aCXDBiSov4vh-umLBvVLUQNijIJttKFgIMsGl_lXbbiFmmCs5Yc6TLuXcU3__" />
+                            <button class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur rounded-full"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0"><button
+                                    class="w-full py-3 bg-primary text-white text-sm font-bold rounded-lg">Quick
+                                    Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex gap-1 mb-2 text-amber-400"><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="text-xs ml-1">(214)</span></div>
+                            <h3 class="font-bold text-slate-900">SPF 50+ Mineral Guard</h3>
+                            <p class="text-slate-500 text-sm mb-4">Broad spectrum physical sunscreen</p>
+                            <div class="flex justify-between"><span
+                                    class="text-xl font-black text-primary">$48.00</span><span class="text-xs">50ml /
+                                    1.7oz</span></div>
+                        </div>
+                    </div>
+                    <!-- Card 4 (first of the duplicates, but we keep the grid full) -->
+                    <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZmhY8Xv9yM4N-EtV1Rfoktt4DmuffugWPxtJcEJQ8SMoMKSjM8Hur1shmv7cb-M2a46DIwa3P9Rre5ksg6Xlz8hi0jt_i8qxz_Qc2X9LK6x6MUw8nQQLGMWLPpJSZ4FUc47RsAjJGvFWcdhxpY2tzbwCIgDfvXcRijU3Fhhh2SPLbtG_7mrN2DSbbIJLTubVBnclOA6q_REzwvz1OgWy6lJOMRGfmdgtSRYQbeKiJwDTZ5Cx3iR5YEcz1XpqHVJhad1cM8xNpKEyY" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1XVu0hlRrNln2hHi2FoUDo-A21g577afaWUoqxgMx_MdaRHn9bXCcNb0cVTS-Ip49UwkrMwSMhBSPmoPZeVjDYspAijGRvk9rzezhcKCZea_Y9SEKSP7scpS5AZrez9NMqtav181ZVoRIUa0kzHF4GmrLdZsPylCvwNhIxBUk8gSteuGjqG3OaSIbySPp_8Fo_Iol3bkr9wxNy_QSk-RjDeaiDM4Hf8DhyW1FKab39mnK3TqMZq0vDDU89GQlquPxBu5WC7DLORlC" />
+                            <button class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0"><button
+                                    class="w-full py-3 bg-primary text-white">Quick Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex gap-1 text-amber-400"><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span>star</span><span class="text-xs ml-1">(89)</span>
+                            </div>
+                            <h3 class="font-bold">Overnight Repair Complex</h3>
+                            <p class="text-slate-500 text-sm">Advanced retinol alternative</p>
+                            <div class="flex justify-between"><span
+                                    class="text-xl font-black text-primary">$72.00</span><span
+                                    class="text-xs">50ml</span></div>
+                        </div>
+                    </div>
+                   
+
+                     <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZmhY8Xv9yM4N-EtV1Rfoktt4DmuffugWPxtJcEJQ8SMoMKSjM8Hur1shmv7cb-M2a46DIwa3P9Rre5ksg6Xlz8hi0jt_i8qxz_Qc2X9LK6x6MUw8nQQLGMWLPpJSZ4FUc47RsAjJGvFWcdhxpY2tzbwCIgDfvXcRijU3Fhhh2SPLbtG_7mrN2DSbbIJLTubVBnclOA6q_REzwvz1OgWy6lJOMRGfmdgtSRYQbeKiJwDTZ5Cx3iR5YEcz1XpqHVJhad1cM8xNpKEyY" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1XVu0hlRrNln2hHi2FoUDo-A21g577afaWUoqxgMx_MdaRHn9bXCcNb0cVTS-Ip49UwkrMwSMhBSPmoPZeVjDYspAijGRvk9rzezhcKCZea_Y9SEKSP7scpS5AZrez9NMqtav181ZVoRIUa0kzHF4GmrLdZsPylCvwNhIxBUk8gSteuGjqG3OaSIbySPp_8Fo_Iol3bkr9wxNy_QSk-RjDeaiDM4Hf8DhyW1FKab39mnK3TqMZq0vDDU89GQlquPxBu5WC7DLORlC" />
+                            <button class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0"><button
+                                    class="w-full py-3 bg-primary text-white">Quick Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex gap-1 text-amber-400"><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span>star</span><span class="text-xs ml-1">(89)</span>
+                            </div>
+                            <h3 class="font-bold">Overnight Repair Complex</h3>
+                            <p class="text-slate-500 text-sm">Advanced retinol alternative</p>
+                            <div class="flex justify-between"><span
+                                    class="text-xl font-black text-primary">$72.00</span><span
+                                    class="text-xs">50ml</span></div>
+                        </div>
+                    </div>
+
+                     <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZmhY8Xv9yM4N-EtV1Rfoktt4DmuffugWPxtJcEJQ8SMoMKSjM8Hur1shmv7cb-M2a46DIwa3P9Rre5ksg6Xlz8hi0jt_i8qxz_Qc2X9LK6x6MUw8nQQLGMWLPpJSZ4FUc47RsAjJGvFWcdhxpY2tzbwCIgDfvXcRijU3Fhhh2SPLbtG_7mrN2DSbbIJLTubVBnclOA6q_REzwvz1OgWy6lJOMRGfmdgtSRYQbeKiJwDTZ5Cx3iR5YEcz1XpqHVJhad1cM8xNpKEyY" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1XVu0hlRrNln2hHi2FoUDo-A21g577afaWUoqxgMx_MdaRHn9bXCcNb0cVTS-Ip49UwkrMwSMhBSPmoPZeVjDYspAijGRvk9rzezhcKCZea_Y9SEKSP7scpS5AZrez9NMqtav181ZVoRIUa0kzHF4GmrLdZsPylCvwNhIxBUk8gSteuGjqG3OaSIbySPp_8Fo_Iol3bkr9wxNy_QSk-RjDeaiDM4Hf8DhyW1FKab39mnK3TqMZq0vDDU89GQlquPxBu5WC7DLORlC" />
+                            <button class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0"><button
+                                    class="w-full py-3 bg-primary text-white">Quick Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex gap-1 text-amber-400"><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span>star</span><span class="text-xs ml-1">(89)</span>
+                            </div>
+                            <h3 class="font-bold">Overnight Repair Complex</h3>
+                            <p class="text-slate-500 text-sm">Advanced retinol alternative</p>
+                            <div class="flex justify-between"><span
+                                    class="text-xl font-black text-primary">$72.00</span><span
+                                    class="text-xs">50ml</span></div>
+                        </div>
+                    </div>
+
+                     <div
+                        class="product-card group relative bg-white rounded-xl overflow-hidden border border-slate-100">
+                        <div class="relative aspect-square overflow-hidden bg-slate-100">
+                            <img class="default-image absolute inset-0 w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZmhY8Xv9yM4N-EtV1Rfoktt4DmuffugWPxtJcEJQ8SMoMKSjM8Hur1shmv7cb-M2a46DIwa3P9Rre5ksg6Xlz8hi0jt_i8qxz_Qc2X9LK6x6MUw8nQQLGMWLPpJSZ4FUc47RsAjJGvFWcdhxpY2tzbwCIgDfvXcRijU3Fhhh2SPLbtG_7mrN2DSbbIJLTubVBnclOA6q_REzwvz1OgWy6lJOMRGfmdgtSRYQbeKiJwDTZ5Cx3iR5YEcz1XpqHVJhad1cM8xNpKEyY" />
+                            <img class="hover-image absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1XVu0hlRrNln2hHi2FoUDo-A21g577afaWUoqxgMx_MdaRHn9bXCcNb0cVTS-Ip49UwkrMwSMhBSPmoPZeVjDYspAijGRvk9rzezhcKCZea_Y9SEKSP7scpS5AZrez9NMqtav181ZVoRIUa0kzHF4GmrLdZsPylCvwNhIxBUk8gSteuGjqG3OaSIbySPp_8Fo_Iol3bkr9wxNy_QSk-RjDeaiDM4Hf8DhyW1FKab39mnK3TqMZq0vDDU89GQlquPxBu5WC7DLORlC" />
+                            <button class="absolute top-4 right-4 size-9 bg-white/80 backdrop-blur"><span
+                                    class="material-symbols-outlined text-lg">favorite</span></button>
+                            <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0"><button
+                                    class="w-full py-3 bg-primary text-white">Quick Add</button></div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex gap-1 text-amber-400"><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span class="fill-1">star</span><span
+                                    class="fill-1">star</span><span>star</span><span class="text-xs ml-1">(89)</span>
+                            </div>
+                            <h3 class="font-bold">Overnight Repair Complex</h3>
+                            <p class="text-slate-500 text-sm">Advanced retinol alternative</p>
+                            <div class="flex justify-between"><span
+                                    class="text-xl font-black text-primary">$72.00</span><span
+                                    class="text-xs">50ml</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination (unchanged) -->
+                <div class="mt-16 flex items-center justify-center gap-2">
+                    <button
+                        class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-200"><span
+                            class="material-symbols-outlined">chevron_left</span></button>
+                    <button
+                        class="size-10 rounded-lg flex items-center justify-center bg-primary text-white font-bold">1</button>
+                    <button
+                        class="size-10 rounded-lg flex items-center justify-center text-slate-600 hover:bg-slate-200">2</button>
+                    <button
+                        class="size-10 rounded-lg flex items-center justify-center text-slate-600 hover:bg-slate-200">3</button>
+                    <span class="text-slate-400 px-2">...</span>
+                    <button
+                        class="size-10 rounded-lg flex items-center justify-center text-slate-600 hover:bg-slate-200">12</button>
+                    <button
+                        class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-200"><span
+                            class="material-symbols-outlined">chevron_right</span></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- filter drawer toggle script -->
+    <script>
+        (function () {
+            const openBtn = document.getElementById('mobileFilterBtn');
+            const drawer = document.getElementById('filterDrawer');
+            const closeBtn = document.getElementById('closeFilterBtn');
+            if (openBtn && drawer && closeBtn) {
+                openBtn.addEventListener('click', function () {
+                    drawer.classList.add('open');
+                });
+                closeBtn.addEventListener('click', function () {
+                    drawer.classList.remove('open');
+                });
+                // optional: click outside to close? but drawer is fixed, we keep close btn
+            }
+        })();
+    </script>
+
+
+    <%- include('partials/footer') %>

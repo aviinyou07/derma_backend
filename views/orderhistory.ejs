@@ -1,0 +1,203 @@
+<%- include('partials/header') %>
+    <main class="flex-grow  w-full px-4 sm:px-6 lg:px-8 py-2 sm:py-2">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+
+            <!-- Order Content -->
+            <section class="flex-grow">
+                <!-- Header with filters -->
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Order History</h1>
+                        <p class="text-sm sm:text-base text-slate-500 dark:text-slate-400 mt-1 sm:mt-2">View and manage
+                            your recent skincare rituals.</p>
+                    </div>
+                   
+                </div>
+
+                <!-- Orders List -->
+                <div class="space-y-6">
+                    <!-- Order Card 1 (Delivered) -->
+                    <div
+                        class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                        <!-- Order Header -->
+                        <div
+                            class="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800 bg-gradient-to-r from-slate-50 to-white dark:from-slate-800/50 dark:to-slate-900 flex flex-wrap gap-4 items-center justify-between">
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 flex-grow">
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Order
+                                        Placed</p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Oct 14, 2023</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Total
+                                    </p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">$184.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Ship
+                                        To</p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Evelyn Harper
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Order
+                                        #</p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">LM-88291</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 rounded-full border border-green-100 dark:border-green-500/20">
+                                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                <span class="text-xs font-bold uppercase tracking-wide">Delivered</span>
+                            </div>
+                        </div>
+
+                        <!-- Order Body -->
+                        <div class="p-4 sm:p-6">
+                            <div class="flex flex-col sm:flex-row gap-6 items-start">
+                                <!-- Product Images -->
+                                   <!-- proper card container -->
+    <div class="max-w-md w-full bg-white dark:bg-slate-800 overflow-hidden ">
+
+        <!-- horizontal flex row: image + info (exactly as original structure but with normal img) -->
+        <div class="flex items-start gap-4">
+
+            <!-- image block: normal <img> replaces background div -->
+            <div class="flex-shrink-0">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBst1vIUOLVzUHznsbUiYk8T_LK2kpkSls3VEjXuFBR6BYmEPf7RNcxZebd8hhce-y3cVRpptQ-1w5XU7jPCf_3UEN_IK0CBWv_bCYr7r7cHzm3lsBu2_5cRaChs2T6JMOryQjVLIN6SSywjsM4iohZZwfeTxhqIGg_YHCRMr_xjhiD3FTgd98p8Vr2Vi7B4Ya6gPjjvdd8JnFsjMLGHL3IoctDJq9aMfZcg0pHOw67VDkJMLbLN7_fO9nCvLQQ_XRNyiWMwNTP2IFx" 
+                     alt="Minimalist glass serum bottle on white background"
+                     class="h-20 w-20 rounded-xl border-2 border-white dark:border-slate-900 bg-slate-100 object-cover shadow-md transform transition-transform group-hover:scale-105"
+                     style="display: block; /* ensure no extra spacing */">
+                <!-- extra wrapper removed, img is direct sibling -->
+            </div>
+
+            <!-- Order Info (exact same content, slightly polished) -->
+            <div class="flex-grow">
+                <h3 class="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100">
+                    The Hydration Ritual Kit
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">+ 1 other item</p>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mt-2 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                    Delivered on October 18, 2023
+                </p>
+            </div>
+        </div>
+
+        
+    </div>
+
+
+                                <!-- Actions -->
+                                <div class="flex gap-2 w-full sm:w-auto">
+                                    <button
+                                        class="flex-1 sm:flex-none px-4 sm:px-5 py-2 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">visibility</span>
+                                        Details
+                                    </button>
+                                    <button
+                                        class="flex-1 sm:flex-none px-4 sm:px-5 py-2 text-xs font-bold bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">repeat</span>
+                                        Reorder
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Order Card 1 (Delivered) -->
+                    <div
+                        class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                        <!-- Order Header -->
+                        <div
+                            class="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800 bg-gradient-to-r from-slate-50 to-white dark:from-slate-800/50 dark:to-slate-900 flex flex-wrap gap-4 items-center justify-between">
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 flex-grow">
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Order
+                                        Placed</p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Oct 14, 2023</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Total
+                                    </p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">$184.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Ship
+                                        To</p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Evelyn Harper
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Order
+                                        #</p>
+                                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">LM-88291</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 rounded-full border border-green-100 dark:border-green-500/20">
+                                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                <span class="text-xs font-bold uppercase tracking-wide">Delivered</span>
+                            </div>
+                        </div>
+
+                        <!-- Order Body -->
+                        <div class="p-4 sm:p-6">
+                            <div class="flex flex-col sm:flex-row gap-6 items-start">
+                                <!-- Product Images -->
+                                   <!-- proper card container -->
+    <div class="max-w-md w-full bg-white dark:bg-slate-800 overflow-hidden ">
+
+        <!-- horizontal flex row: image + info (exactly as original structure but with normal img) -->
+        <div class="flex items-start gap-4 p-5">
+
+            <!-- image block: normal <img> replaces background div -->
+            <div class="flex-shrink-0">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBst1vIUOLVzUHznsbUiYk8T_LK2kpkSls3VEjXuFBR6BYmEPf7RNcxZebd8hhce-y3cVRpptQ-1w5XU7jPCf_3UEN_IK0CBWv_bCYr7r7cHzm3lsBu2_5cRaChs2T6JMOryQjVLIN6SSywjsM4iohZZwfeTxhqIGg_YHCRMr_xjhiD3FTgd98p8Vr2Vi7B4Ya6gPjjvdd8JnFsjMLGHL3IoctDJq9aMfZcg0pHOw67VDkJMLbLN7_fO9nCvLQQ_XRNyiWMwNTP2IFx" 
+                     alt="Minimalist glass serum bottle on white background"
+                     class="h-20 w-20 rounded-xl border-2 border-white dark:border-slate-900 bg-slate-100 object-cover shadow-md transform transition-transform group-hover:scale-105"
+                     style="display: block; /* ensure no extra spacing */">
+                <!-- extra wrapper removed, img is direct sibling -->
+            </div>
+
+            <!-- Order Info (exact same content, slightly polished) -->
+            <div class="flex-grow">
+                <h3 class="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100">
+                    The Hydration Ritual Kit
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">+ 1 other item</p>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mt-2 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                    Delivered on October 18, 2023
+                </p>
+            </div>
+        </div>
+
+       
+    </div>
+
+
+                                <!-- Actions -->
+                                <div class="flex gap-2 w-full sm:w-auto">
+                                    <button
+                                        class="flex-1 sm:flex-none px-4 sm:px-5 py-2 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">visibility</span>
+                                        Details
+                                    </button>
+                                    <button
+                                        class="flex-1 sm:flex-none px-4 sm:px-5 py-2 text-xs font-bold bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">repeat</span>
+                                        Reorder
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+               
+            </section>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
