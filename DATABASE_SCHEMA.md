@@ -1,12 +1,12 @@
 # Database Schema - db_derma_co
 
-Generated: 2/28/2026, 11:05:37 PM
+Generated: 2/3/2026, 12:21:48 am
 
 ================================================================================
 
 ## TABLE: brands
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -24,9 +24,35 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 - slug (slug) [UNIQUE]
 
 
-## TABLE: categories
+## TABLE: cart_items
 --------------------------------------------------------------------------------
 Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+
+### Columns
+1. id (int) [NOT NULL] [PRIMARY KEY]
+2. user_id (int) [NOT NULL]
+3. variation_id (int) [NOT NULL]
+4. quantity (int) [NOT NULL] [DEFAULT: 1]
+5. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+6. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+
+### Indexes
+- idx_cart_items_user (user_id)
+- idx_cart_items_variation (variation_id)
+- PRIMARY (id) [UNIQUE]
+- uniq_user_variation (user_id, variation_id) [UNIQUE]
+
+### Foreign Keys
+- user_id → users.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+- variation_id → product_variations.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+
+### Check Constraints
+- chk_cart_items_quantity_positive: (`quantity` > 0)
+
+
+## TABLE: categories
+--------------------------------------------------------------------------------
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -45,7 +71,7 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 
 ## TABLE: coupon_usages
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -69,7 +95,7 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 
 ## TABLE: coupons
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -94,9 +120,30 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 - PRIMARY (id) [UNIQUE]
 
 
-## TABLE: order_items
+## TABLE: newsletter_subscribers
 --------------------------------------------------------------------------------
 Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+
+### Columns
+1. id (int) [NOT NULL] [PRIMARY KEY]
+2. email (varchar(255)) [NOT NULL] [UNIQUE]
+3. full_name (varchar(150))
+4. source (varchar(50)) [NOT NULL] [DEFAULT: footer]
+5. is_active (tinyint(1)) [DEFAULT: 1]
+6. subscribed_at (datetime) [NOT NULL] [DEFAULT: CURRENT_TIMESTAMP]
+7. unsubscribed_at (datetime)
+8. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+9. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+
+### Indexes
+- idx_newsletter_active_created (is_active, created_at)
+- PRIMARY (id) [UNIQUE]
+- uniq_newsletter_email (email) [UNIQUE]
+
+
+## TABLE: order_items
+--------------------------------------------------------------------------------
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -126,6 +173,34 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 ### Foreign Keys
 - order_id → orders.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
 
+### Check Constraints
+- chk_order_items_non_negative: ((`quantity` > 0) and (`unit_price` >= 0) and (`gst_amount` >= 0) and (`discount_amount` >= 0) and (`total_price` >= 0))
+
+
+## TABLE: order_status_history
+--------------------------------------------------------------------------------
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+
+### Columns
+1. id (int) [NOT NULL] [PRIMARY KEY]
+2. order_id (int) [NOT NULL]
+3. from_status (enum('pending','confirmed','processing','shipped','delivered','cancelled','returned'))
+4. to_status (enum('pending','confirmed','processing','shipped','delivered','cancelled','returned')) [NOT NULL]
+5. changed_by (int)
+6. change_reason (varchar(255))
+7. metadata (json)
+8. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+
+### Indexes
+- fk_osh_changed_by (changed_by)
+- idx_osh_order_created (order_id, created_at)
+- idx_osh_to_status_created (to_status, created_at)
+- PRIMARY (id) [UNIQUE]
+
+### Foreign Keys
+- changed_by → users.id (ON UPDATE NO ACTION, ON DELETE SET NULL)
+- order_id → orders.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+
 
 ## TABLE: orders
 --------------------------------------------------------------------------------
@@ -136,29 +211,30 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 2. user_id (int) [NOT NULL]
 3. order_number (varchar(50)) [NOT NULL] [UNIQUE]
 4. status (enum('pending','confirmed','processing','shipped','delivered','cancelled','returned')) [NOT NULL] [DEFAULT: pending]
-5. payment_status (enum('pending','paid','failed','refunded','partially_refunded')) [NOT NULL] [DEFAULT: pending]
-6. currency (varchar(10)) [NOT NULL] [DEFAULT: INR]
-7. total_quantity (int) [NOT NULL]
-8. subtotal (decimal(12,2)) [NOT NULL]
-9. total_gst (decimal(12,2)) [NOT NULL] [DEFAULT: 0.00]
-10. shipping_charge (decimal(12,2)) [NOT NULL] [DEFAULT: 0.00]
-11. discount_amount (decimal(12,2)) [NOT NULL] [DEFAULT: 0.00]
-12. grand_total (decimal(12,2)) [NOT NULL]
-13. coupon_code (varchar(100))
-14. shipping_address (json) [NOT NULL]
-15. billing_address (json)
-16. invoice_number (varchar(100))
-17. notes (text)
-18. placed_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
-19. confirmed_at (timestamp)
-20. shipped_at (timestamp)
-21. delivered_at (timestamp)
-22. cancelled_at (timestamp)
-23. returned_at (timestamp)
-24. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
-25. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
-26. tracking_number (varchar(100))
-27. courier_name (varchar(100))
+5. payment_method (enum('razorpay','cod')) [NOT NULL] [DEFAULT: razorpay]
+6. payment_status (enum('pending','paid','failed','refunded','partially_refunded')) [NOT NULL] [DEFAULT: pending]
+7. currency (varchar(10)) [NOT NULL] [DEFAULT: INR]
+8. total_quantity (int) [NOT NULL]
+9. subtotal (decimal(12,2)) [NOT NULL]
+10. total_gst (decimal(12,2)) [NOT NULL] [DEFAULT: 0.00]
+11. shipping_charge (decimal(12,2)) [NOT NULL] [DEFAULT: 0.00]
+12. discount_amount (decimal(12,2)) [NOT NULL] [DEFAULT: 0.00]
+13. grand_total (decimal(12,2)) [NOT NULL]
+14. coupon_code (varchar(100))
+15. shipping_address (json) [NOT NULL]
+16. billing_address (json)
+17. invoice_number (varchar(100))
+18. notes (text)
+19. placed_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+20. confirmed_at (timestamp)
+21. shipped_at (timestamp)
+22. delivered_at (timestamp)
+23. cancelled_at (timestamp)
+24. returned_at (timestamp)
+25. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+26. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+27. tracking_number (varchar(100))
+28. courier_name (varchar(100))
 
 ### Indexes
 - idx_orders_created_at (created_at)
@@ -176,10 +252,71 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 ### Foreign Keys
 - user_id → users.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
 
+### Check Constraints
+- chk_orders_totals_non_negative: ((`subtotal` >= 0) and (`total_gst` >= 0) and (`shipping_charge` >= 0) and (`discount_amount` >= 0) and (`grand_total` >= 0))
+
+
+## TABLE: payment_events
+--------------------------------------------------------------------------------
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+
+### Columns
+1. id (int) [NOT NULL] [PRIMARY KEY]
+2. order_id (int) [NOT NULL]
+3. payment_gateway (varchar(50)) [NOT NULL]
+4. event_type (varchar(100)) [NOT NULL]
+5. gateway_event_id (varchar(150)) [NOT NULL] [UNIQUE]
+6. signature (varchar(255))
+7. payload (json)
+8. processed_at (datetime)
+9. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+
+### Indexes
+- idx_payment_events_gateway_created (payment_gateway, created_at)
+- idx_payment_events_order_created (order_id, created_at)
+- PRIMARY (id) [UNIQUE]
+- uniq_payment_event_gateway_id (gateway_event_id) [UNIQUE]
+
+### Foreign Keys
+- order_id → orders.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+
+
+## TABLE: product_reviews
+--------------------------------------------------------------------------------
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+
+### Columns
+1. id (int) [NOT NULL] [PRIMARY KEY]
+2. user_id (int) [NOT NULL]
+3. product_id (int) [NOT NULL]
+4. order_item_id (int) [UNIQUE]
+5. rating (tinyint) [NOT NULL]
+6. review_title (varchar(150))
+7. review_text (text)
+8. is_verified_purchase (tinyint(1)) [DEFAULT: 0]
+9. is_published (tinyint(1)) [DEFAULT: 1]
+10. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+11. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+
+### Indexes
+- idx_reviews_product_created (product_id, created_at)
+- idx_reviews_product_rating (product_id, rating)
+- idx_reviews_user_created (user_id, created_at)
+- PRIMARY (id) [UNIQUE]
+- uniq_review_order_item (order_item_id) [UNIQUE]
+
+### Foreign Keys
+- order_item_id → order_items.id (ON UPDATE NO ACTION, ON DELETE SET NULL)
+- product_id → products.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+- user_id → users.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+
+### Check Constraints
+- chk_reviews_rating_range: (`rating` between 1 and 5)
+
 
 ## TABLE: product_variations
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -205,10 +342,14 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 ### Foreign Keys
 - product_id → products.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
 
+### Check Constraints
+- chk_variations_price_non_negative: (`price` >= 0)
+- chk_variations_stock_non_negative: (`stock` >= 0)
+
 
 ## TABLE: products
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -223,25 +364,33 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 10. is_active (tinyint(1)) [DEFAULT: 1]
 11. is_featured (tinyint(1)) [DEFAULT: 0]
 12. is_trending (tinyint(1)) [DEFAULT: 0]
-13. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
-14. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+13. average_rating (decimal(3,2)) [NOT NULL] [DEFAULT: 0.00]
+14. review_count (int) [NOT NULL] [DEFAULT: 0]
+15. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+16. updated_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
 
 ### Indexes
 - brand_id (brand_id)
 - category_id (category_id)
+- idx_products_average_rating (average_rating)
 - idx_products_is_active (is_active)
 - idx_products_is_featured (is_featured)
 - idx_products_is_trending (is_trending)
+- idx_products_review_count (review_count)
 - PRIMARY (id) [UNIQUE]
 - slug (slug) [UNIQUE]
 
 ### Foreign Keys
+- category_id → categories.id (ON UPDATE NO ACTION, ON DELETE SET NULL)
 - brand_id → brands.id (ON UPDATE NO ACTION, ON DELETE SET NULL)
+
+### Check Constraints
+- chk_products_rating_bounds: ((`average_rating` >= 0) and (`average_rating` <= 5) and (`review_count` >= 0))
 
 
 ## TABLE: transactions
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -249,7 +398,7 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 3. payment_gateway (varchar(50)) [NOT NULL]
 4. payment_method (varchar(50))
 5. gateway_order_id (varchar(100))
-6. gateway_payment_id (varchar(100))
+6. gateway_payment_id (varchar(100)) [UNIQUE]
 7. gateway_signature (varchar(255))
 8. amount (decimal(12,2)) [NOT NULL]
 9. status (enum('pending','success','failed','refunded','partially_refunded')) [NOT NULL] [DEFAULT: pending]
@@ -265,14 +414,18 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 - order_id (order_id)
 - PRIMARY (id) [UNIQUE]
 - status (status)
+- uniq_gateway_payment_id (gateway_payment_id) [UNIQUE]
 
 ### Foreign Keys
 - order_id → orders.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
 
+### Check Constraints
+- chk_transactions_amount_non_negative: ((`amount` >= 0) and (`refund_amount` >= 0))
+
 
 ## TABLE: user_addresses
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -300,7 +453,7 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 
 ## TABLE: user_otps
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -314,6 +467,7 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 
 ### Indexes
 - expires_at (expires_at)
+- idx_user_otp_lookup (user_id, purpose, is_used, expires_at)
 - PRIMARY (id) [UNIQUE]
 - purpose (purpose)
 - user_id (user_id)
@@ -324,7 +478,7 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 
 ## TABLE: users
 --------------------------------------------------------------------------------
-Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: 1
 
 ### Columns
 1. id (int) [NOT NULL] [PRIMARY KEY]
@@ -341,5 +495,26 @@ Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
 - email (email) [UNIQUE]
 - phone (phone) [UNIQUE]
 - PRIMARY (id) [UNIQUE]
+
+
+## TABLE: wishlist_items
+--------------------------------------------------------------------------------
+Engine: InnoDB | Collation: utf8mb4_0900_ai_ci | Auto Increment: null
+
+### Columns
+1. id (int) [NOT NULL] [PRIMARY KEY]
+2. user_id (int) [NOT NULL]
+3. product_id (int) [NOT NULL]
+4. created_at (timestamp) [DEFAULT: CURRENT_TIMESTAMP]
+
+### Indexes
+- idx_wishlist_product_created (product_id, created_at)
+- idx_wishlist_user_created (user_id, created_at)
+- PRIMARY (id) [UNIQUE]
+- uniq_wishlist_user_product (user_id, product_id) [UNIQUE]
+
+### Foreign Keys
+- product_id → products.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
+- user_id → users.id (ON UPDATE NO ACTION, ON DELETE CASCADE)
 
 ================================================================================

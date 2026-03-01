@@ -1,8 +1,22 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const { validateEnv } = require('./config/env');
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT);
+
+validateEnv();
+
+const viewRoutes = require('./routes/view.route');
+const productRoutes = require('./routes/product.route');
+const categoryRoutes = require('./routes/category.route');
+const userRoutes = require('./routes/user.routes');
+const orderRoutes = require('./routes/order.route');
+const cartRoutes = require('./routes/cart.route');
+const wishlistRoutes = require('./routes/wishlist.route');
+const reviewRoutes = require('./routes/review.route');
+const newsletterRoutes = require('./routes/newsletter.route');
 
 // Set EJS as view engine
 app.set('view engine', 'ejs');
@@ -12,39 +26,21 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware for static files (CSS, JS, images)
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.get('/', (req, res) => {
-    res.render('index', { title: "Home Page" });
-});
+// View routes (EJS pages)
+app.use('/', viewRoutes);
 
-app.get('/productlist', (req, res) => {
-    res.render('productlist');
-});
-
-app.get('/checkout', (req, res) => {
-    res.render('checkout');
-});
-
-app.get('/orderhistory', (req, res) => {
-    res.render('orderhistory');
-});
-
-app.get('/productdetails', (req, res) => {
-    res.render('productdetails');
-});
-
-app.get('/orderdetails', (req, res) => {
-    res.render('orderdetails');
-});
-
-app.get('/cart', (req, res) => {
-    res.render('cart');
-});
-
-
-
-
+// API routes
+app.use('/api/products', productRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 
 
 app.listen(PORT, () => {

@@ -13,27 +13,27 @@
 <div>
 <h4 class="font-bold text-slate-900 dark:text-white mb-6 uppercase text-xs tracking-widest">Shop</h4>
 <ul class="space-y-4 text-sm text-slate-500">
-<li><a class="hover:text-primary" href="#">New Arrivals</a></li>
-<li><a class="hover:text-primary" href="#">Best Sellers</a></li>
-<li><a class="hover:text-primary" href="#">Skincare Sets</a></li>
-<li><a class="hover:text-primary" href="#">Gift Cards</a></li>
+<li><a class="hover:text-primary" href="/productlist?sort=newest">New Arrivals</a></li>
+<li><a class="hover:text-primary" href="/productlist?sort=trending">Best Sellers</a></li>
+<li><a class="hover:text-primary" href="/productlist">Skincare Sets</a></li>
+<li><a class="hover:text-primary" href="/checkout?mode=cart">Gift Cards</a></li>
 </ul>
 </div>
 <div>
 <h4 class="font-bold text-slate-900 dark:text-white mb-6 uppercase text-xs tracking-widest">Support</h4>
 <ul class="space-y-4 text-sm text-slate-500">
-<li><a class="hover:text-primary" href="#">Shipping Policy</a></li>
-<li><a class="hover:text-primary" href="#">Returns &amp; Exchanges</a></li>
-<li><a class="hover:text-primary" href="#">Contact Us</a></li>
-<li><a class="hover:text-primary" href="#">FAQs</a></li>
+<li><a class="hover:text-primary" href="/checkout">Shipping Policy</a></li>
+<li><a class="hover:text-primary" href="/orderhistory">Returns &amp; Exchanges</a></li>
+<li><a class="hover:text-primary" href="/cart">Contact Us</a></li>
+<li><a class="hover:text-primary" href="/productlist">FAQs</a></li>
 </ul>
 </div>
 <div>
 <h4 class="font-bold text-slate-900 dark:text-white mb-6 uppercase text-xs tracking-widest">Newsletter</h4>
 <p class="text-slate-500 text-sm mb-4">Join for exclusive offers and skincare tips.</p>
 <div class="flex gap-2">
-<input class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 px-3 text-sm focus:ring-1 focus:ring-primary" placeholder="Email address" type="email"/>
-<button class="bg-primary text-white p-2 rounded-lg hover:bg-primary/90">
+<input id="newsletter-email" class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 px-3 text-sm focus:ring-1 focus:ring-primary" placeholder="Email address" type="email"/>
+<button id="newsletter-subscribe-btn" class="bg-primary text-white p-2 rounded-lg hover:bg-primary/90" type="button">
 <span class="material-symbols-outlined">send</span>
 </button>
 </div>
@@ -42,13 +42,54 @@
 <div class="max-w-7xl mx-auto pt-2 mt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
 <p class="text-slate-400 text-xs">© 2024 Dermacare Elite. All rights reserved.</p>
 <div class="flex gap-6">
-<a class="text-slate-400 hover:text-primary" href="#"><span class="material-symbols-outlined text-xl">public</span></a>
-<a class="text-slate-400 hover:text-primary" href="#"><span class="material-symbols-outlined text-xl">share</span></a>
-<a class="text-slate-400 hover:text-primary" href="#"><span class="material-symbols-outlined text-xl">camera</span></a>
+<a class="text-slate-400 hover:text-primary" href="/"><span class="material-symbols-outlined text-xl">public</span></a>
+<a class="text-slate-400 hover:text-primary" href="/productlist"><span class="material-symbols-outlined text-xl">share</span></a>
+<a class="text-slate-400 hover:text-primary" href="/orderhistory"><span class="material-symbols-outlined text-xl">camera</span></a>
 </div>
 </div>
 </footer>
 
 </div>
 </div>
+
+<script>
+	(function () {
+		const input = document.getElementById('newsletter-email');
+		const button = document.getElementById('newsletter-subscribe-btn');
+		if (!input || !button) return;
+
+		const submit = async function () {
+			const email = (input.value || '').trim().toLowerCase();
+			if (!email) {
+				window.AppUI?.toast?.('Please enter your email', 'error');
+				return;
+			}
+
+			try {
+				const response = await fetch('/api/newsletter/subscribe', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email, source: 'footer' })
+				});
+
+				const payload = await response.json();
+				if (!response.ok) throw new Error(payload?.message || 'Subscription failed');
+
+				input.value = '';
+				window.AppUI?.toast?.(payload?.message || 'Subscribed successfully', 'success');
+			} catch (error) {
+				window.AppUI?.toast?.(error.message || 'Subscription failed', 'error');
+			}
+		};
+
+		button.addEventListener('click', submit);
+		input.addEventListener('keydown', function (event) {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+				submit();
+			}
+		});
+	})();
+</script>
+
 </body></html>
