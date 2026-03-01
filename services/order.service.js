@@ -5,6 +5,22 @@ const query = require('../queries/order.query');
 
 const generateOrderNumber = () => `ORD-${Date.now()}`;
 
+const isPlaceholderCredential = (value) => {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (!normalized) return true;
+  if (normalized.includes('xxxxxxxx')) return true;
+  return normalized.startsWith('your_') || normalized.startsWith('replace_with_');
+};
+
+const ensureRazorpayConfigured = () => {
+  const keyId = process.env.RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+  if (isPlaceholderCredential(keyId) || isPlaceholderCredential(keySecret)) {
+    throw new Error('Razorpay is not configured with real credentials. Update RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET');
+  }
+};
+
 const parseJsonField = (value, fallback = null) => {
   if (value == null) return fallback;
   if (typeof value === 'object') return value;
@@ -285,6 +301,10 @@ exports.createOrder = async (userId, payload) => {
     coupon_code = null
   } = payload;
 
+  if (payment_method === 'razorpay') {
+    ensureRazorpayConfigured();
+  }
+
   if (!['razorpay', 'cod'].includes(payment_method)) {
     throw new Error('Invalid payment method');
   }
@@ -477,11 +497,18 @@ exports.createOrder = async (userId, payload) => {
 
   /* --- Create Razorpay order AFTER transaction --- */
 
-  const razorpayOrder = await razorpay.orders.create({
-    amount: Math.round(orderResult.grand_total * 100),
-    currency: "INR",
-    receipt: orderResult.order_number
-  });
+  let razorpayOrder;
+
+  try {
+    razorpayOrder = await razorpay.orders.create({
+      amount: Math.round(orderResult.grand_total * 100),
+      currency: "INR",
+      receipt: orderResult.order_number
+    });
+  } catch (error) {
+    const gatewayMessage = error?.error?.description || error?.message || 'Unknown Razorpay error';
+    throw new Error(`Unable to create Razorpay order: ${gatewayMessage}`);
+  }
 
   await db.query(
     `UPDATE orders SET invoice_number = ? WHERE id = ?`,
@@ -503,6 +530,8 @@ exports.createOrder = async (userId, payload) => {
    VERIFY RAZORPAY PAYMENT
 ========================================================= */
 exports.verifyPayment = async (data) => {
+
+  ensureRazorpayConfigured();
 
   const {
     razorpay_order_id,
@@ -526,7 +555,7 @@ exports.verifyPayment = async (data) => {
 
     /* --- Check order exists --- */
     const [rows] = await connection.query(
-      `SELECT grand_total, payment_status
+      `SELECT grand_total, payment_status, user_id, payment_method
        FROM orders WHERE id = ?`,
       [order_id]
     );
@@ -581,6 +610,13 @@ exports.verifyPayment = async (data) => {
         JSON.stringify(data)
       ]
     );
+
+    if (order.payment_method === 'razorpay' && Number(order.user_id) > 0) {
+      await connection.query(
+        `DELETE FROM cart_items WHERE user_id = ?`,
+        [order.user_id]
+      );
+    }
   });
 
   return { message: "Payment verified successfully" };
@@ -608,10 +644,12 @@ exports.createOrderFromCart = async (userId, payload) => {
     coupon_code: couponCode
   });
 
-  await db.query(
-    `DELETE FROM cart_items WHERE user_id = ?`,
-    [userId]
-  );
+  if (paymentMethod === 'cod') {
+    await db.query(
+      `DELETE FROM cart_items WHERE user_id = ?`,
+      [userId]
+    );
+  }
 
   return result;
 };
